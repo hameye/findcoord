@@ -1,4 +1,4 @@
-#########################################################################
+#####################################################################
 #    This file is part of FindCoord developed at the University of Lorraine
 #    by the GeoRessources Laboratory. FindCoord helps recalculating
 #    coordinates of a series of points in a new system from reference
@@ -21,19 +21,16 @@
 #    Contact = jean.cauzid@univ-lorraine.fr
 #    Copyright (C) 2019, 2020 H. Meyer, University of Lorraine
 #
-#########################################################################
-
-
-######################################################
-import numpy as np
-import pandas as pd
-from skimage import transform as tf
-import matplotlib.pyplot as plt
-######################################################
+#####################################################################
 __author__ = "Hadrien Meyer"
 __organization__ = "ENSG Nancy"
 __email__ = "meyerhadrien96@gmail.com"
 __date__ = "March, 2020"
+
+
+import numpy as np
+import pandas as pd
+from skimage import transform as tf
 
 
 class Transformation:
@@ -127,10 +124,3 @@ class Transformation:
             fd.write('{},{},{}\n'.format('Mesure' + str(i + 1), round(
                 self.Mesures_final_array_[i, 0], 2), round(self.Mesures_final_array_[i, 1], 2)))
         fd.close()
-
-
-################################################################################################################################
-# --------------------------- Running the code - Achieving the transformation --------------------------
-TF = Transformation('Input.txt', 'Output.txt')
-Tf.transform()
-TF.extract_mesures_final()
