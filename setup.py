@@ -1,5 +1,5 @@
 from setuptools import setup
-
+import setuptools
 setup(
     name='findcoord',
     version='0.0.1',
@@ -8,5 +8,5 @@ setup(
     author='Deeplimers',
     author_email='meyerhadrien96@gmail.com',
     license='unlicense',
-    packages=['findcoord']
+    packages=setuptools.find_packages()
 )
