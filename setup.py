@@ -8,5 +8,5 @@ setup(
     author='Deeplimers',
     author_email='meyerhadrien96@gmail.com',
     license='unlicense',
-    packages=['findcoord', 'findcoord.findcoord']
+    packages=['findcoord']
 )
