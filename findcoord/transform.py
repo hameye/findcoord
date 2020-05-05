@@ -142,7 +142,7 @@ class Transformation:
         return self.transformation_(self.Repere_init_array_)
 
     def extract_mesures_final(self):
-        """ Write the calculated coordinates into the output textfile """
+        """ Write the calculated coordinates into the output textfile. """
         fd = open(self.output_, "a")
         fd.write('\n')
         for i in range(self.Mesures_final_array_.shape[0]):
