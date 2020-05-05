@@ -1,4 +1,4 @@
-#####################################################################
+###############################################################################
 #    This file is part of FindCoord developed at the University of Lorraine
 #    by the GeoRessources Laboratory. FindCoord helps recalculating
 #    coordinates of a series of points in a new system from reference
@@ -21,7 +21,7 @@
 #    Contact = jean.cauzid@univ-lorraine.fr
 #    Copyright (C) 2019, 2020 H. Meyer, University of Lorraine
 #
-#####################################################################
+###############################################################################
 __author__ = "Hadrien Meyer"
 __organization__ = "ENSG Nancy"
 __email__ = "meyerhadrien96@gmail.com"
@@ -34,12 +34,28 @@ from skimage import transform as tf
 
 
 class Transformation:
-    """ Class that allows to compute the transformation of coordinates given some landmarks between two systems."""
+    """ Class that allows to compute the transformation of coordinates given    some landmarks between two systems.
+
+    Based on scikit-image and made for multi-platform spectroscopy analsyses :
+    it is a simple overlay that open a spreadsheet with known coordinates and write in a second spreadsheet the calculated coordinates.
+
+    Main functions are transform() and extract_mesures_final(). Other functions are just accessors in order to validate the tranfsormation.
+
+    Accepted type of spreadsheet : .txt, .csv, .xlsx
+
+    Parameters
+    ----------
+    Input : x,y(,z) spreadsheet
+        Known coordinates.
+    Output : x,y(,z) spreadsheet
+        Coordinates to be calculated.
+
+    References
+    ----------
+    Scikit-Image : https://scikit-image.org/docs/stable/api/skimage.transform.html#skimage.transform.AffineTransform
+    """
 
     def __init__(self, Input, Output):
-        """ Input & Output are .txt files
-                Input contains Landmarks (named Repere) and points to tranfsorm (named Mesures)
-                Output only contains Landmarks in the new system """
         # Load the textfile into the class
         self.input_ = Input
         self.output_ = Output
@@ -51,27 +67,36 @@ class Transformation:
         except:
             self.Input_ = pd.read_excel(Input, header=1)
             self.Output_ = pd.read_excel(Output, header=1)
+
         # Extract Landmarks from initial system
         self.Repere_init_ = self.Input_[
             self.Input_['Type'].str.contains('Repere')]
+
         # Create array of initial landmark values for transform calculations
         self.Repere_init_array_ = np.zeros([self.Repere_init_.shape[0], 2])
+
         # Fill the array with the values
         self.Repere_init_array_[:, 0] = self.Repere_init_['X']
         self.Repere_init_array_[:, 1] = self.Repere_init_['Y']
+
         # Extract Landmarks from final system
         self.Repere_final_ = self.Output_[
             self.Output_['Type'].str.contains('Repere')]
+
         # Create array of final landmark values for transform calculations
         self.Repere_final_array_ = np.zeros([self.Repere_final_.shape[0], 2])
+
         # Fill the array with the values
         self.Repere_final_array_[:, 0] = self.Repere_final_['X']
         self.Repere_final_array_[:, 1] = self.Repere_final_['Y']
+
         # Extract measurements values from initial system
         self.Mesures_init_ = self.Input_[
             self.Input_['Type'].str.contains('Mesure')]
+
         # Create array of initial measurements for transform calculations
         self.Mesures_init_array_ = np.zeros([self.Mesures_init_.shape[0], 2])
+
         # Fill the array with the values
         self.Mesures_init_array_[:, 0] = self.Mesures_init_['X']
         self.Mesures_init_array_[:, 1] = self.Mesures_init_['Y']
