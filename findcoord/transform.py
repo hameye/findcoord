@@ -56,6 +56,8 @@ class Transformation:
     """
 
     def __init__(self, Input, Output):
+        """ Load the input and output files and extract values to put into arrays 
+        """
         # Load the textfile into the class
         self.input_ = Input
         self.output_ = Output
