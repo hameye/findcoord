@@ -56,7 +56,7 @@ class Transformation:
     """
 
     def __init__(self, Input, Output):
-        """ Load the input and output files and extract values to put into arrays 
+        """ Load the input and output files and extract values to put into arrays
         """
         # Load the textfile into the class
         self.input_ = Input
@@ -135,7 +135,7 @@ class Transformation:
                 self.Mesures_init_array_)
 
     def get_transform_matrix(self):
-        """ Return the array of the transformation matrix """
+        """ Return the array of the transformation matrix. """
         return self.transformation_.params
 
     def get_transform_repere(self):
