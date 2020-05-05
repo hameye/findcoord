@@ -1,12 +1,12 @@
 from setuptools import setup
 
 setup(
-    name='pylime',
+    name='findcoord',
     version='0.0.1',
-    description='Deeplime Python Library',
-    url='git@github.com:deeplime-io/pylime.git',
+    description='FindCoord',
+    url='git@github.com:hameye/findcoord.git',
     author='Deeplimers',
-    author_email='contact@deeplime.io',
+    author_email='meyerhadrien96@gmail.com',
     license='unlicense',
-    packages=['pylime']
+    packages=['findcoord']
 )
