@@ -34,12 +34,18 @@ from skimage import transform as tf
 
 
 class Transformation:
-    """ Class that allows to compute the transformation of coordinates given    some landmarks between two systems.
+    """ Class that allows to compute the transformation of
+    coordinates given    some landmarks between two systems.
 
-    Based on scikit-image and made for multi-platform spectroscopy analsyses :
-    it is a simple overlay that open a spreadsheet with known coordinates and write in a second spreadsheet the calculated coordinates.
+    Based on scikit-image and made for multi-platform
+    spectroscopy analsyses : it is a simple overlay
+    that open a spreadsheet with known coordinates
+    and write in a second spreadsheet the calculated coordinates.
 
-    Main functions are transform() and extract_mesures_final(). Other functions are just accessors in order to validate the tranfsormation.
+    Main functions are transform() and
+    extract_mesures_final().
+    Other functions are just
+    accessors in order to validate the tranfsormation.
 
     Accepted type of spreadsheet : .txt, .csv, .xlsx
 
@@ -52,11 +58,13 @@ class Transformation:
 
     References
     ----------
-    Scikit-Image : https://scikit-image.org/docs/stable/api/skimage.transform.html#skimage.transform.AffineTransform
+    Scikit-Image :
+    https://scikit-image.org/docs/stable/api/skimage.transform.html#skimage.transform.AffineTransform
     """
 
     def __init__(self, Input, Output):
-        """ Load the input and output files and extract values to put into arrays
+        """ Load the input and
+        output files and extract values to put into arrays
         """
         # Load the textfile into the class
         self.input_ = Input
@@ -116,10 +124,13 @@ class Transformation:
         return self.Input_[self.Input_['Type'].str.contains('Mesure')]
 
     def transform(self, type='Proj'):
-        """ In our working cases the transformation should only be affine (Rotation,Translation and Shear).
-                But in general cases, the transformation could also have deformation and the transformation is
-                a projection.
-                See Mathematical definition of affine transformation and Projection (Homography) for more details. """
+        """ In our working cases the transformation
+        should only be affine (Rotation,Translation and Shear).
+        But in general cases, the transformation could
+        also have deformation and the transformation is
+        a projection.
+        See Mathematical definition of affine
+        transformation and Projection (Homography) for more details. """
         if type == 'Affine':
             self.transformation_ = tf.AffineTransform()
             self.transformation_.estimate(
@@ -139,8 +150,9 @@ class Transformation:
         return self.transformation_.params
 
     def get_transform_repere(self):
-        """ Return the transformation of the Landmarks done by the matrix.
-                Usefull to compare the the true and the calculated landmarks """
+        """ Return the transformation of the Landmarks
+        done by the matrix. Usefull to compare the the
+        true and the calculated landmarks """
         return self.transformation_(self.Repere_init_array_)
 
     def extract_mesures_final(self):
@@ -149,5 +161,5 @@ class Transformation:
         fd.write('\n')
         for i in range(self.Mesures_final_array_.shape[0]):
             fd.write('{},{},{}\n'.format('Mesure' + str(i + 1), round(
-                self.Mesures_final_array_[i, 0], 2), round(self.Mesures_final_array_[i, 1], 2)))
+                self.Mesures_final_array_[i, 0], 2),   round(self.Mesures_final_array_[i, 1], 2)))
         fd.close()
