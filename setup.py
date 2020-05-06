@@ -8,7 +8,7 @@ setup(
     author='Deeplimers',
     author_email='meyerhadrien96@gmail.com',
     license='unlicense',
-    packages=packages=find_namespace_packages(exclude=[
+    packages=find_namespace_packages(exclude=[
             'doc', 'doc.*']),
     zip_safe=False
 )
