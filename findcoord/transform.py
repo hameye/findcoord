@@ -160,6 +160,18 @@ class Transformation:
         fd = open(self.output_, "a")
         fd.write('\n')
         for i in range(self.Mesures_final_array_.shape[0]):
-            fd.write('{},{},{}\n'.format('Mesure' + str(i + 1), round(
-                self.Mesures_final_array_[i, 0], 2),   round(self.Mesures_final_array_[i, 1], 2)))
+            fd.write(
+                '{},{},{}\n'.format(
+                    'Mesure' + str(
+                        i + 1),
+                    round(
+                        self.Mesures_final_array_[
+                            i,
+                            0],
+                        2),
+                    round(
+                        self.Mesures_final_array_[
+                            i,
+                            1],
+                        2)))
         fd.close()
