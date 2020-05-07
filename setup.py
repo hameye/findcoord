@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_namespace_packages
 
 setup(
     name='findcoord',
@@ -8,5 +8,7 @@ setup(
     author='Deeplimers',
     author_email='meyerhadrien96@gmail.com',
     license='unlicense',
-    packages=setuptools.find_packages()
+    packages=find_namespace_packages(exclude=[
+            'doc', 'doc.*']),
+    zip_safe=False
 )
