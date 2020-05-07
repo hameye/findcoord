@@ -71,10 +71,10 @@ class Transformation:
         self.output_ = Output
 
         # Create Dataframes from the textfiles
-        try:
+        if self.Input_.split('.')[-1] in ('csv', 'txt'):
             self.Input_ = pd.read_csv(Input)
             self.Output_ = pd.read_csv(Output)
-        except:
+        else:
             self.Input_ = pd.read_excel(Input, header=1)
             self.Output_ = pd.read_excel(Output, header=1)
 
