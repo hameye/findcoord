@@ -32,7 +32,7 @@ import pandas as pd
 from skimage import transform as tf
 
 
-class CoordinatesCalculation:
+class findcoord:
     """ Class that allows to compute the transformation of
     coordinates given    some landmarks between two systems.
 
@@ -88,11 +88,11 @@ class CoordinatesCalculation:
         See Mathematical definition of affine
         transformation and Projection (Homography) for more details. """
         self.repere_init_array_ = self.input_.loc[
-            self.input_['Type'] == 'Repere']
+            self.input_['Type'] == 'Repere'].to_numpy()[:, 1:]
         self.repere_final_array_ = self.output_.loc[
-            self.output_['Type'] == 'Repere']
+            self.output_['Type'] == 'Repere'].to_numpy()[:, 1:]
         self.mesures_init_array_ = self.input_.loc[
-            self.input_['Type'] == 'Mesure']
+            self.input_['Type'] == 'Mesure'].to_numpy()[:, 1:]
 
         if type == 'Affine':
             self.transformation_ = tf.AffineTransform()
