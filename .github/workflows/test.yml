@@ -22,3 +22,5 @@ jobs:
         echo ${{github.ref}}
         flake8 setup.py
         autopep8 --recursive --aggressive --diff --exit-code findcoord/
+        
+
