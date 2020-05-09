@@ -71,11 +71,11 @@ class findcoord:
 
         # Create Dataframes from the textfiles
         if self.input_.split('.')[-1] in ('csv', 'txt'):
-            self.input_ = pd.read_csv(Input)
-            self.output_ = pd.read_csv(Output)
+            self.input_data = pd.read_csv(Input)
+            self.output_data = pd.read_csv(Output)
         else:
-            self.input_ = pd.read_excel(Input, header=1)
-            self.output_ = pd.read_excel(Output, header=1)
+            self.input_data = pd.read_excel(Input, header=1)
+            self.output_data = pd.read_excel(Output, header=1)
 
         # Extract Landmarks from initial system
 
@@ -87,12 +87,12 @@ class findcoord:
         a projection.
         See Mathematical definition of affine
         transformation and Projection (Homography) for more details. """
-        self.repere_init_array_ = self.input_.loc[
-            self.input_['Type'] == 'Repere'].to_numpy()[:, 1:]
-        self.repere_final_array_ = self.output_.loc[
-            self.output_['Type'] == 'Repere'].to_numpy()[:, 1:]
-        self.mesures_init_array_ = self.input_.loc[
-            self.input_['Type'] == 'Mesure'].to_numpy()[:, 1:]
+        self.repere_init_array_ = self.input_data.loc[
+            self.input_data['Type'] == 'Repere'].to_numpy()[:, 1:]
+        self.repere_final_array_ = self.output_data.loc[
+            self.output_data['Type'] == 'Repere'].to_numpy()[:, 1:]
+        self.mesures_init_array_ = self.input_data.loc[
+            self.input_data['Type'] == 'Mesure'].to_numpy()[:, 1:]
 
         if type == 'Affine':
             self.transformation_ = tf.AffineTransform()
