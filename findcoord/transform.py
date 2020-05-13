@@ -77,10 +77,8 @@ class findcoord:
             self.input_data = pd.read_excel(Input, header=1)
             self.output_data = pd.read_excel(Output, header=1)
 
-        # Extract Landmarks from initial system
-
     def calculate_coordinates(self, type='Proj'):
-        """ In our working cases the transformation
+        """ In laboratory spectroscopy the transformation
         should only be affine (Rotation,Translation and Shear).
         But in general cases, the transformation could
         also have deformation and the transformation is

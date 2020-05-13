@@ -7,8 +7,9 @@ FindCoord - Quickly Find Coordinates for analysis
 
 .. toctree::
     :maxdepth: 2
-
+    
     API Documentation <API/modules.rst>
+
 
 
 Indices and tables
