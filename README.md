@@ -17,6 +17,6 @@ pip install git+ssh://git@github.com:hameye/findcoord.git
 import findcoord.transform as fn
 TF = fn.transformation(input_filename,output_filename)
 
-fn.calculate_coordinates()
-fn.extract_coordinates()
+TF.calculate_coordinates()
+TF.extract_coordinates()
 ```
