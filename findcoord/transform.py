@@ -32,7 +32,7 @@ import pandas as pd
 from skimage import transform as tf
 
 
-class findcoord:
+class transformation:
     """ Class that allows to compute the transformation of
     coordinates given    some landmarks between two systems.
 
@@ -50,9 +50,9 @@ class findcoord:
 
     Parameters
     ----------
-    Input : x,y(,z) spreadsheet
+    input_filename : x,y(,z) spreadsheet
         Known coordinates.
-    Output : x,y(,z) spreadsheet
+    output_filename : x,y(,z) spreadsheet
         Coordinates to be calculated.
 
     References
@@ -61,26 +61,24 @@ class findcoord:
     https://scikit-image.org/docs/stable/api/skimage.transform.html#skimage.transform.AffineTransform
     """
 
-    def __init__(self, Input, Output):
+    def __init__(self, input_filename: str, output_filename: str):
         """ Load the input and
         output files and extract values to put into arrays
         """
 
-        self.input_ = Input
-        self.output_ = Output
+        self.input_ = input_filename
+        self.output_ = output_filename
 
         # Create Dataframes from the textfiles
         if self.input_.split('.')[-1] in ('csv', 'txt'):
-            self.input_data = pd.read_csv(Input)
-            self.output_data = pd.read_csv(Output)
+            self.input_data = pd.read_csv(input_filename)
+            self.output_data = pd.read_csv(output_filename)
         else:
-            self.input_data = pd.read_excel(Input, header=1)
-            self.output_data = pd.read_excel(Output, header=1)
-
-        # Extract Landmarks from initial system
+            self.input_data = pd.read_excel(input_filename, header=1)
+            self.output_data = pd.read_excel(output_filename, header=1)
 
     def calculate_coordinates(self, type='Proj'):
-        """ In our working cases the transformation
+        """ In laboratory spectroscopy the transformation
         should only be affine (Rotation,Translation and Shear).
         But in general cases, the transformation could
         also have deformation and the transformation is
@@ -118,7 +116,7 @@ class findcoord:
         true and the calculated landmarks """
         return self.transformation_(self.repere_init_array_)
 
-    def extract_mesures_final(self):
+    def extract_coordinates(self):
         """ Write the calculated coordinates into the output textfile. """
         fd = open(self.output_, "a")
         fd.write('\n')
