@@ -9,7 +9,7 @@ Overlay of the affine transformation from Scikit-Image : https://scikit-image.or
 
 Just do:
 ```bash
-pip install git+ssh://git@github.com:hameye/findcoord.git
+pip install git+ssh://git@github.com/hameye/findcoord.git
 ```
 
 ## Use in python
