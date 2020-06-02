@@ -1,8 +1,8 @@
 Type,X,Y
-Reference,155,15
-Reference,65,40
-Reference,260,130
-Reference,360,95
+Reference1,155,15
+Reference2,65,40
+Reference3,260,130
+Reference4,360,95
 Measurement1,124.39,36.81
 Measurement2,90.94,39.45
 Measurement3,114.56,44.51
