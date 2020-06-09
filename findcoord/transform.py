@@ -119,13 +119,13 @@ class transformation:
     def extract_coordinates(self):
         """ Write the calculated coordinates into the output textfile. """
         prefix = os.path.commonprefix(
-            self.input_data['Type'][-1], self.input_data['Type'][-2])
+            self.input_data.iloc[-1]['Type'], self.input_data.iloc[-2]['Type'])
         fd = open(self.output_, "a")
         fd.write('\n')
         for i in range(self.mesures_final_array_.shape[0]):
             fd.write(
                 '{},{},{}\n'.format(
-                    common + str(
+                    prefix + str(
                         i + 1),
                     round(
                         self.mesures_final_array_[
