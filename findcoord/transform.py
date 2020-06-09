@@ -23,11 +23,11 @@
 #
 ###############################################################################
 __author__ = "Hadrien Meyer"
-__organization__ = "ENSG - Université de Lorraine"
+__organization__ = "ENSG - UMR GeoRessources N°7359 - Université de Lorraine"
 __email__ = "meyerhadrien96@gmail.com"
 __date__ = "March, 2020"
 
-
+import os
 import pandas as pd
 from skimage import transform as tf
 
@@ -118,7 +118,9 @@ class transformation:
 
     def extract_coordinates(self):
         """ Write the calculated coordinates into the output textfile. """
-        prefix = self.input_data['Type'].unique()[-1]
+        prefix = os.path.commonprefix(
+            [self.input_data.iloc[-1]['Type'],
+             self.input_data.iloc[-2]['Type']])
         fd = open(self.output_, "a")
         fd.write('\n')
         for i in range(self.mesures_final_array_.shape[0]):
