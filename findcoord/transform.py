@@ -118,9 +118,8 @@ class transformation:
 
     def extract_coordinates(self):
         """ Write the calculated coordinates into the output textfile. """
-        prefix = os.path.commonprefix(
-            [self.input_data.iloc[-1]['Type'],
-             self.input_data.iloc[-2]['Type']])
+        prefix = ''.join([i for i in self.input_data.iloc[-1]
+                          ['Type'] if not i.isdigit()])
         fd = open(self.output_, "a")
         fd.write('\n')
         for i in range(self.mesures_final_array_.shape[0]):
