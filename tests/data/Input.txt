@@ -1,0 +1,9 @@
+Type,X,Y
+Reference1,398,142
+Reference2,4625,146
+Reference3,4524,7238
+Reference4,327,7183
+Measurement,2588,3963
+Measurement,2494,3892
+Measurement,2521,2144
+Measurement,4161,5558

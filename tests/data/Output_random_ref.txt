@@ -1,0 +1,9 @@
+Type,X,Y
+Reference1,-20093,22581
+Reference2,3153,22741
+Reference3,3035,-16291
+Reference4,-20110,-16215
+Measurement1,-7822.32,1661.97
+Measurement2,-8344.06,2048.37
+Measurement3,-8295.91,11669.75
+Measurement4,933.17,-7046.08

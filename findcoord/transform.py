@@ -27,13 +27,14 @@ __organization__ = "ENSG - UMR GeoRessources N°7359 - Université de Lorraine"
 __email__ = "meyerhadrien96@gmail.com"
 __date__ = "March, 2020"
 
-import os
 import pandas as pd
 from skimage import transform as tf
+import numpy as np
 
 
 class transformation:
-    """ Class that allows to compute the transformation of
+    """ 
+    Class that allows to compute the transformation of
     coordinates given    some landmarks between two systems.
 
     Based on scikit-image and made for multi-platform
@@ -59,6 +60,7 @@ class transformation:
     ----------
     Scikit-Image :
     https://scikit-image.org/docs/stable/api/skimage.transform.html#skimage.transform.AffineTransform
+
     """
 
     def __init__(self, input_filename: str, output_filename: str):
@@ -73,9 +75,11 @@ class transformation:
         if self.input_.split('.')[-1] in ('csv', 'txt'):
             self.input_data = pd.read_csv(input_filename)
             self.output_data = pd.read_csv(output_filename)
-        else:
+        elif self.input_.split('.')[-1] in ('xlsx', 'txt'):
             self.input_data = pd.read_excel(input_filename, header=1)
             self.output_data = pd.read_excel(output_filename, header=1)
+        else:
+            raise NotImplementedError('File Format Not Supported Yet ...')
 
     def calculate_coordinates(self, type='Proj'):
         """ In laboratory spectroscopy the transformation
@@ -86,25 +90,27 @@ class transformation:
         See Mathematical definition of affine
         transformation and Projection (Homography) for more details. """
         self.repere_init_array_ = self.input_data.loc[
-            self.input_data['Type'].str.contains('ef')].to_numpy()[:, 1:]
+            self.input_data['Type'].str.contains('ef')
+        ].iloc[:, 1:].to_numpy()
         self.repere_final_array_ = self.output_data.loc[
-            self.output_data['Type'].str.contains('ef')].to_numpy()[:, 1:]
+            self.output_data['Type'].str.contains('ef')
+        ].iloc[:, 1:].to_numpy()
         self.mesures_init_array_ = self.input_data.loc[
-            self.input_data['Type'].str.contains('easure')].to_numpy()[:, 1:]
+            self.input_data['Type'].str.contains('easure')
+        ].iloc[:, 1:].to_numpy()
 
         if type == 'Affine':
             self.transformation_ = tf.AffineTransform()
-            self.transformation_.estimate(
-                self.repere_init_array_, self.repere_final_array_)
-            self.mesures_final_array_ = self.transformation_(
-                self.mesures_init_array_)
-
-        if type == 'Proj':
+            self.transformation_.estimate(self.repere_init_array_, self.repere_final_array_)
+            self.mesures_final_array_ = self.transformation_(self.mesures_init_array_)
+            self.mesures_final_array_ = np.around(self.mesures_final_array_, decimals=2)
+        elif type == 'Proj':
             self.transformation_ = tf.ProjectiveTransform()
-            self.transformation_.estimate(
-                self.repere_init_array_, self.repere_final_array_)
-            self.mesures_final_array_ = self.transformation_(
-                self.mesures_init_array_)
+            self.transformation_.estimate(self.repere_init_array_, self.repere_final_array_)
+            self.mesures_final_array_ = self.transformation_(self.mesures_init_array_)
+            self.mesures_final_array_ = np.around(self.mesures_final_array_, decimals=2)
+        else:
+            raise NotImplementedError('Transformation Method Not Implemented Yet ...')
 
     def get_transform_matrix(self):
         """ Return the array of the transformation matrix. """
@@ -118,23 +124,11 @@ class transformation:
 
     def extract_coordinates(self):
         """ Write the calculated coordinates into the output textfile. """
-        prefix = ''.join([i for i in self.input_data.iloc[-1]
-                          ['Type'] if not i.isdigit()])
+        prefix = ''.join([i for i in self.input_data.iloc[-1]['Type'] if not i.isdigit()])
         fd = open(self.output_, "a")
         fd.write('\n')
         for i in range(self.mesures_final_array_.shape[0]):
             fd.write(
-                '{},{},{}\n'.format(
-                    prefix + str(
-                        i + 1),
-                    round(
-                        self.mesures_final_array_[
-                            i,
-                            0],
-                        2),
-                    round(
-                        self.mesures_final_array_[
-                            i,
-                            1],
-                        2)))
+                f"{prefix + str(i + 1)},{self.mesures_final_array_[i, 0]},{self.mesures_final_array_[i, 1]}\n"
+            )
         fd.close()

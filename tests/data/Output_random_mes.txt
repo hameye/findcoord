@@ -1,0 +1,5 @@
+Type,X,Y
+Reference1,-20093,22581
+Reference2,3153,22741
+Reference3,3035,-16291
+Reference4,-20110,-16215
