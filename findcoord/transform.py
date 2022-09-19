@@ -24,7 +24,7 @@
 ###############################################################################
 __author__ = "Hadrien Meyer"
 __organization__ = "ENSG - UMR GeoRessources N°7359 - Université de Lorraine"
-__email__ = "meyerhadrien96@gmail.com"
+__email__ = "jean.cauzid@univ-lorraine.fr"
 __date__ = "March, 2020"
 
 import pandas as pd
