@@ -31,6 +31,7 @@ import pandas as pd
 from skimage import transform as tf
 import numpy as np
 
+from typing import Union
 
 class transformation:
     """ 
@@ -63,7 +64,7 @@ class transformation:
 
     """
 
-    def __init__(self, input_filename: str, output_filename: str):
+    def __init__(self, input_filename: Union[pd.DataFrame, str], output_filename: Union[pd.DataFrame, str]):
         """ Load the input and
         output files and extract values to put into arrays
         """
@@ -72,7 +73,10 @@ class transformation:
         self.output_ = output_filename
 
         # Create Dataframes from the textfiles
-        if self.input_.split('.')[-1] in ('csv', 'txt'):
+        if isinstance(self.input_, pd.DataFrame):
+            self.input_data = input_filename
+            self.output_data = output_filename
+        elif self.input_.split('.')[-1] in ('csv', 'txt'):
             self.input_data = pd.read_csv(input_filename)
             self.output_data = pd.read_csv(output_filename)
         elif self.input_.split('.')[-1] in ('xlsx', 'txt'):
@@ -122,7 +126,7 @@ class transformation:
         true and the calculated landmarks """
         return self.transformation_(self.repere_init_array_)
 
-    def extract_coordinates(self):
+    def extract_coordinates_old(self):
         """ Write the calculated coordinates into the output textfile. """
         prefix = ''.join([i for i in self.input_data.iloc[-1]['Type'] if not i.isdigit()])
         fd = open(self.output_, "a")
@@ -132,3 +136,16 @@ class transformation:
                 f"{prefix + str(i + 1)},{self.mesures_final_array_[i, 0]},{self.mesures_final_array_[i, 1]}\n"
             )
         fd.close()
+
+    def write_dataframe(self):
+        prefix = ''.join([i for i in self.input_data.iloc[-1]['Type'] if not i.isdigit()])
+        prefix_list = np.repeat(prefix, self.mesures_final_array_.shape[0])
+        int_enum = np.arange(self.mesures_final_array_.shape[0]) + 1
+        str_list = np.core.defchararray.add(prefix_list, int_enum.astype(str))
+        mes_df = pd.DataFrame([str_list,self.mesures_final_array_[:, 0], self.mesures_final_array_[:, 1]]).T
+        mes_df.columns = self.output_data.columns
+        return pd.concat([self.output_data, mes_df]).reset_index(drop=True)
+
+    def extract_coordinates(self):
+        df = self.write_dataframe()
+        df.to_csv(self.output_, index=False)
